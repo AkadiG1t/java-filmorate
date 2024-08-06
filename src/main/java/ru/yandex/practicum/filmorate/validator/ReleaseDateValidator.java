@@ -4,6 +4,8 @@ package ru.yandex.practicum.filmorate.validator;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import ru.yandex.practicum.filmorate.annotations.ReleaseDateAnnotation;
+import ru.yandex.practicum.filmorate.exception.ValidateException;
+
 import java.time.LocalDate;
 
 public class ReleaseDateValidator implements ConstraintValidator<ReleaseDateAnnotation, LocalDate> {
@@ -15,6 +17,10 @@ public class ReleaseDateValidator implements ConstraintValidator<ReleaseDateAnno
             return true;
         }
 
-        return !value.isBefore(MIN_DATE);
+        if (value.isBefore(MIN_DATE)) {
+            throw new ValidateException("Дата релиза фильма не может быть ранее чем 28.12.1895");
+        }
+
+        return true;
     }
 }

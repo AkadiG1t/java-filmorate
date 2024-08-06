@@ -17,6 +17,6 @@ public class NoSpaceValidator implements ConstraintValidator<NoSpaceAnnotation, 
             throw new ValidateException("Логин не может содержать пробелов");
         }
 
-        return !value.contains(" ");
+        return true;
     }
 }

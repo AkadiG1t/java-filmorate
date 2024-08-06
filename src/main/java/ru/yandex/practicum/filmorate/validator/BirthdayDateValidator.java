@@ -3,6 +3,8 @@ package ru.yandex.practicum.filmorate.validator;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import ru.yandex.practicum.filmorate.annotations.BirthdayAnnotation;
+import ru.yandex.practicum.filmorate.exception.ValidateException;
+
 import java.time.LocalDate;
 
 public class BirthdayDateValidator implements ConstraintValidator<BirthdayAnnotation, LocalDate> {
@@ -13,7 +15,11 @@ public class BirthdayDateValidator implements ConstraintValidator<BirthdayAnnota
             return true;
         }
 
-        return !value.isAfter(LocalDate.now());
+        if (value.isAfter(LocalDate.now())) {
+            throw new ValidateException("Дата рождения не может быть в будущем");
+        }
+
+        return true;
     }
 }
 

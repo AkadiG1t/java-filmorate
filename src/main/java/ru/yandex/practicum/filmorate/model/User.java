@@ -17,13 +17,13 @@ public class User {
     @NotNull(message = "Чтобы обновить пользователя нужно его ID", groups = Update.class)
     private Long id;
     @NotNull(message = "Чтобы зарегестрироваться нужен email", groups = Create.class)
-    @Email
+    @Email(message = "must be a well-formed email address")
     private String email;
-    @NotNull(groups = Create.class)
+    @NotNull(message = "must not be null", groups = Create.class)
     private String login;
     private String name;
     @JsonFormat(shape = STRING, pattern = "yyyy.MM.dd")
     @BirthdayAnnotation
-    @NotNull(groups = Create.class)
+    @NotNull(message = "must not be null", groups = Create.class)
     private LocalDate birthday;
 }

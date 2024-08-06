@@ -1,16 +1,13 @@
 package ru.yandex.practicum.filmorate.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import ru.yandex.practicum.filmorate.annotations.BirthdayAnnotation;
 import ru.yandex.practicum.filmorate.maker.Create;
 import ru.yandex.practicum.filmorate.maker.Update;
-
 import java.time.LocalDate;
 
-import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 
 @Data
 public class User {

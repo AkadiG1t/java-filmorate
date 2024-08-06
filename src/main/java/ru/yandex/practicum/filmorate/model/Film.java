@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -10,7 +9,6 @@ import ru.yandex.practicum.filmorate.maker.Create;
 import ru.yandex.practicum.filmorate.maker.Update;
 import java.time.LocalDate;
 
-import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 
 @Data
 public class Film {
@@ -21,7 +19,6 @@ public class Film {
     @Length(max = 200, message = "Длинна сообщения не может быть больше 200 символов")
     private String description;
     @ReleaseDateAnnotation
-    @JsonFormat(shape = STRING, pattern = "yyyy.MM.dd")
     @NotNull(groups = Create.class)
     private LocalDate releaseDate;
     @Min(value = 0, message = "Длительность фильма не может быть меньше 0")

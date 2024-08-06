@@ -8,7 +8,7 @@ import ru.yandex.practicum.filmorate.exception.ValidateException;
 public class NoSpaceValidator implements ConstraintValidator<NoSpaceAnnotation, String> {
 
     @Override
-    public boolean isValid(String value, ConstraintValidatorContext Context) {
+    public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null) {
             return true;
         }

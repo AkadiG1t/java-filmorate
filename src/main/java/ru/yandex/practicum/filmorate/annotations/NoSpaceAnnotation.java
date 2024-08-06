@@ -15,6 +15,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface NoSpaceAnnotation {
     String message() default "Логин не может быть с пробелами";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

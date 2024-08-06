@@ -1,13 +1,12 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.data.DataMap;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
-import ru.yandex.practicum.filmorate.maker.Create;
-import ru.yandex.practicum.filmorate.maker.Update;
 import ru.yandex.practicum.filmorate.model.Film;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -24,7 +23,7 @@ public class FilmController {
     }
 
     @PostMapping
-    public Film create(@RequestBody @Validated(Create.class) Film film) {
+    public Film create(@RequestBody @Valid Film film) {
         log.info("Попытка создать новый объект Film");
         film.setId(++filmId);
         dataMap.getFilms().put(film.getId(), film);
@@ -34,7 +33,7 @@ public class FilmController {
     }
 
     @PutMapping
-    public Film update(@RequestBody @Validated(Update.class) Film film) {
+    public Film update(@RequestBody @Valid Film film) {
         log.info("Обновляем данные фильма с ID: {}", film.getId());
 
         if (!dataMap.getFilms().containsKey(film.getId())) {

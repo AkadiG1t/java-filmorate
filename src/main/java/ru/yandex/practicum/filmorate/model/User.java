@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import ru.yandex.practicum.filmorate.annotations.BirthdayAnnotation;
+import ru.yandex.practicum.filmorate.annotations.NoSpaceAnnotation;
 import ru.yandex.practicum.filmorate.maker.Create;
 import ru.yandex.practicum.filmorate.maker.Update;
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ public class User {
     @Email(message = "must be a well-formed email address")
     private String email;
     @NotNull(message = "must not be null", groups = Create.class)
+    @NoSpaceAnnotation
     private String login;
     private String name;
     @BirthdayAnnotation

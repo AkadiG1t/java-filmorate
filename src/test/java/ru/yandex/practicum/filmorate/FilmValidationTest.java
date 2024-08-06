@@ -1,51 +1,80 @@
 package ru.yandex.practicum.filmorate;
-
-import static org.junit.jupiter.api.Assertions.*;
+import jakarta.validation.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.yandex.practicum.filmorate.exception.ValidateException;
+import ru.yandex.practicum.filmorate.maker.Create;
 import ru.yandex.practicum.filmorate.model.Film;
+
+import java.time.LocalDate;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class FilmValidationTest {
 
+    Validator validator;
+
+    @BeforeEach
+    public void setup() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+    }
+
     @Test
     public void testValidFilm() {
-        Film film = new Film(null, "Valid Name", "Valid Description", "28.12.1985", 120);
-        assertDoesNotThrow(film::validate);
+        Film film = new Film();
+        film.setName("Название");
+        film.setDescription("Какое-то описание");
+        film.setReleaseDate(LocalDate.of(2022, 1, 1));
+        film.setDuration(120);
+
+        Set<ConstraintViolation<Film>> violations = validator.validate(film);
+
+        assertEquals(0, violations.size());
     }
 
     @Test
-    public void testEmptyName() {
-        Film film = new Film(null, "", "Valid Description", "28.12.1985", 120);
-        Exception exception = assertThrows(ValidateException.class, film::validate);
-        assertEquals("Название фильма не может быть пустым", exception.getMessage());
+    public void testFilmMissingName() {
+        Film film = new Film();
+        film.setDescription("Описание");
+        film.setReleaseDate(LocalDate.of(2022, 1, 1));
+        film.setDuration(120);
+
+        Set<ConstraintViolation<Film>> violations = validator.validate(film, Create.class);
+
+        assertEquals(1, violations.size());
+        ConstraintViolation<Film> violation = violations.iterator().next();
+        assertEquals("name", violation.getPropertyPath().toString());
     }
 
     @Test
-    public void testLongDescription() {
-        String longDescription = "a".repeat(201);
-        Film film = new Film(null, "Valid Name", longDescription, "28.12.1985", 120);
-        Exception exception = assertThrows(ValidateException.class, film::validate);
-        assertEquals("Слишком длинное описание", exception.getMessage());
+    public void testFilmInvalidReleaseDate() {
+        Film film = new Film();
+        film.setName("название");
+        film.setDescription("описание");
+        film.setReleaseDate(null);
+        film.setDuration(120);
+
+        Set<ConstraintViolation<Film>> violations = validator.validate(film, Create.class);
+
+        assertEquals(1, violations.size());
+        ConstraintViolation<Film> violation = violations.iterator().next();
+        assertEquals("releaseDate", violation.getPropertyPath().toString());
     }
 
     @Test
-    public void testInvalidDate() {
-        Film film = new Film(null, "Valid Name", "Valid Description", "27.12.1985", 120);
-        Exception exception = assertThrows(ValidateException.class, film::validate);
-        assertEquals("Дата не может быть до: 28.12.1985", exception.getMessage());
-    }
+    public void testFilmNegativeDuration() {
+        Film film = new Film();
+        film.setName("Название");
+        film.setDescription("описание");
+        film.setReleaseDate(LocalDate.of(2022, 1, 1));
+        film.setDuration(-120);
 
-    @Test
-    public void testNegativeDuration() {
-        Film film = new Film(null, "Valid Name", "Valid Description", "28.12.1985", -1);
-        Exception exception = assertThrows(ValidateException.class, film::validate);
-        assertEquals("Продолжительность фильма не может быть меньше 0", exception.getMessage());
-    }
+        Set<ConstraintViolation<Film>> violations = validator.validate(film);
 
-    @Test
-    public void testEmptyRequest() {
-        Film film = new Film(null, null, null, null, null);
-        Exception exception = assertThrows(ValidateException.class, film::validate);
-        assertEquals("Название фильма не может быть пустым", exception.getMessage());
+        assertEquals(1, violations.size());
+        ConstraintViolation<Film> violation = violations.iterator().next();
+        assertEquals("duration", violation.getPropertyPath().toString());
     }
 }

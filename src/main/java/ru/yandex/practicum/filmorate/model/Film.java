@@ -1,37 +1,30 @@
 package ru.yandex.practicum.filmorate.model;
 
-
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import ru.yandex.practicum.filmorate.exception.ValidateException;
+import org.hibernate.validator.constraints.Length;
+import ru.yandex.practicum.filmorate.annotations.ReleaseDateAnnotation;
+import ru.yandex.practicum.filmorate.maker.Create;
+import ru.yandex.practicum.filmorate.maker.Update;
+import java.time.LocalDate;
 
+import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Film {
+    @NotNull(message = "Для того чтобы обновить данные нужено значение ID", groups = Update.class)
     private Long id;
+    @NotNull(message = "Филь должен быть с названием", groups = Create.class)
     private String name;
+    @Length(max = 200, message = "Длинна сообщения не может быть больше 200 символов")
     private String description;
-    private String releaseDate;
+    @ReleaseDateAnnotation
+    @JsonFormat(shape = STRING, pattern = "yyyy.MM.dd")
+    @NotNull(groups = Create.class)
+    private LocalDate releaseDate;
+    @Min(value = 0, message = "Длительность фильма не может быть меньше 0")
     private Integer duration;
 
-
-
-    public void validate() throws ValidateException {
-        if (name == null || name.isEmpty()) {
-            throw new ValidateException("Название фильма не может быть пустым");
-        }
-        if (description != null && description.length() > 200) {
-            throw new ValidateException("Слишком длинное описание");
-        }
-        if (releaseDate != null && !releaseDate.equals("28.12.1985")) {
-            throw new ValidateException("Дата не может быть до: 28.12.1985");
-        }
-        if (duration != null && duration < 0) {
-            throw new ValidateException("Продолжительность фильма не может быть меньше 0");
-        }
-    }
 }
-

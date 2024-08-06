@@ -1,37 +1,29 @@
 package ru.yandex.practicum.filmorate.model;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import ru.yandex.practicum.filmorate.exception.ValidateException;
+import ru.yandex.practicum.filmorate.annotations.BirthdayAnnotation;
+import ru.yandex.practicum.filmorate.maker.Create;
+import ru.yandex.practicum.filmorate.maker.Update;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
+import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class User {
+    @NotNull(message = "Чтобы обновить пользователя нужно его ID", groups = Update.class)
     private Long id;
+    @NotNull(message = "Чтобы зарегестрироваться нужен email", groups = Create.class)
+    @Email
     private String email;
+    @NotNull(groups = Create.class)
     private String login;
     private String name;
-    private String birthday;
-
-    public void validate() throws ValidateException {
-        if (email == null || email.isBlank() || !email.contains("@")) {
-            throw new ValidateException("Неверный формат Email");
-        }
-        if (login == null || login.isBlank() || login.contains(" ")) {
-            throw new ValidateException("Неверный формат Логина");
-        }
-        if (name == null || name.isBlank()) {
-            name = login;
-        }
-        if (birthday != null && LocalDate.parse(birthday, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-                .isAfter(LocalDate.now())) {
-            throw new ValidateException("Дата рождения не может быть в будущем");
-        }
-    }
+    @JsonFormat(shape = STRING, pattern = "yyyy.MM.dd")
+    @BirthdayAnnotation
+    @NotNull(groups = Create.class)
+    private LocalDate birthday;
 }

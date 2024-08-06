@@ -12,7 +12,7 @@ import java.util.*;
 
 @Slf4j
 @RestController()
-@RequestMapping("/film")
+@RequestMapping("/films")
 public class FilmController extends Controller<Film> {
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     private final Map<Long, Film> films = new HashMap<>();

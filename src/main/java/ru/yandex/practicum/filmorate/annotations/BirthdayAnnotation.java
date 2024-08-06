@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface BirthdayAnnotation {
-    String message() default "Дата рождения не может быть в будущем";
+    String message() default "";
 
     Class<?>[] groups() default {};
 

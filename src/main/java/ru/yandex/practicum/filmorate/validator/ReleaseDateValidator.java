@@ -18,7 +18,7 @@ public class ReleaseDateValidator implements ConstraintValidator<ReleaseDateAnno
         }
 
         if (value.isBefore(MIN_DATE)) {
-            throw new ValidateException("Дата релиза фильма не может быть ранее чем 28.12.1895");
+            throw new ValidateException("");
         }
 
         return true;

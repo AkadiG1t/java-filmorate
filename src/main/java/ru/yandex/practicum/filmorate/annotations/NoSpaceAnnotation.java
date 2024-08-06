@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface NoSpaceAnnotation {
-    String message() default "Логин не может быть с пробелами";
+    String message() default "";
 
     Class<?>[] groups() default {};
 

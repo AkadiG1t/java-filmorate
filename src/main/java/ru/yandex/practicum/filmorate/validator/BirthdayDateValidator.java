@@ -16,7 +16,7 @@ public class BirthdayDateValidator implements ConstraintValidator<BirthdayAnnota
         }
 
         if (value.isAfter(LocalDate.now())) {
-            throw new ValidateException("Дата рождения не может быть в будущем");
+            throw new ValidateException("");
         }
 
         return true;

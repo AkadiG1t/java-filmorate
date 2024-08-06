@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @PutMapping
-    public User update (@RequestBody @Validated(Update.class) User user) {
+    public User update(@RequestBody @Validated(Update.class) User user) {
         log.info("Попытка обновления данных пользователя с ID {}", user.getId());
 
         if (!dataMap.getUsers().containsKey(user.getId())) {

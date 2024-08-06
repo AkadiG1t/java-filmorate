@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.filmorate.exception.ValidateException;
 import ru.yandex.practicum.filmorate.model.User;
 

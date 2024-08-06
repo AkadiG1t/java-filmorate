@@ -23,12 +23,12 @@ public class UserController {
 
     @PostMapping
     public User createUser(@RequestBody User user) {
-        if (user.getEmail() == null ||user.getEmail().isBlank() || !user.getEmail().contains("@") ) {
+        if (user.getEmail() == null || user.getEmail().isBlank() || !user.getEmail().contains("@")) {
             log.error("Неверный формат Email {}", user.getEmail());
             throw new ValidateException("Неверный формат Email");
         }
 
-        if (user.getLogin() == null || user.getLogin().isBlank()|| user.getLogin().contains(" ")) {
+        if (user.getLogin() == null || user.getLogin().isBlank() || user.getLogin().contains(" ")) {
             log.error("Неверный формат Логина {}", user.getLogin());
             throw new ValidateException("Неверный формат Логина");
         }

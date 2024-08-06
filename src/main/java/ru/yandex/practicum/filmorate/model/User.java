@@ -22,7 +22,6 @@ public class User {
     @NotNull(message = "must not be null", groups = Create.class)
     private String login;
     private String name;
-    @JsonFormat(shape = STRING, pattern = "yyyy.MM.dd")
     @BirthdayAnnotation
     @NotNull(message = "must not be null", groups = Create.class)
     private LocalDate birthday;

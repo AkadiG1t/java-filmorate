@@ -14,7 +14,7 @@ public class NoSpaceValidator implements ConstraintValidator<NoSpaceAnnotation, 
         }
 
         if (value.contains(" ")) {
-            throw new ValidateException("");
+            throw new ValidateException();
         }
 
         return true;

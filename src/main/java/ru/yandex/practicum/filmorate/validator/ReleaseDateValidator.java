@@ -18,7 +18,7 @@ public class ReleaseDateValidator implements ConstraintValidator<ReleaseDateAnno
         }
 
         if (value.isBefore(MIN_DATE)) {
-            throw new ValidateException("");
+            throw new ValidateException();
         }
 
         return true;

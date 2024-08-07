@@ -43,7 +43,7 @@ public class UserValidatorTest {
 
         Set<ConstraintViolation<User>> violations = validator.validate(user, Create.class);
         assertEquals(1, violations.size());
-        assertEquals("не должно равняться null", violations.iterator().next().getMessage());
+        assertEquals("не должно быть пустым", violations.iterator().next().getMessage());
     }
 
     @Test

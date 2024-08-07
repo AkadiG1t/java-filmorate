@@ -25,6 +25,6 @@ public class User {
     String login;
     String name;
     @BirthdayAnnotation
-    @NotBlank(groups = Create.class)
+    @NotNull(groups = Create.class)
     private LocalDate birthday;
 }

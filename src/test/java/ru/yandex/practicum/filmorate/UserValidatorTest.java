@@ -39,6 +39,7 @@ public class UserValidatorTest {
         user.setLogin("testuser");
         user.setName("Test User");
         user.setBirthday(LocalDate.of(1990, 1, 1));
+        user.setId(1L);
 
         Set<ConstraintViolation<User>> violations = validator.validate(user, Create.class);
         assertEquals(1, violations.size());
@@ -65,9 +66,9 @@ public class UserValidatorTest {
         user.setName("Test User");
         user.setBirthday(LocalDate.of(1990, 1, 1));
 
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        Set<ConstraintViolation<User>> violations = validator.validate(user, Create.class);
         assertEquals(1, violations.size());
-        assertEquals("не должно быть пустым", violations.iterator().next().getMessage());
+        assertEquals("must not be blank", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -82,4 +83,3 @@ public class UserValidatorTest {
         assertEquals("must not be null", violations.iterator().next().getMessage());
     }
 }
-

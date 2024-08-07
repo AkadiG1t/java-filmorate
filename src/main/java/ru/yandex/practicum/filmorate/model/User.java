@@ -13,15 +13,15 @@ import ru.yandex.practicum.filmorate.maker.Update;
 import java.time.LocalDate;
 
 
-@Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Data
 public class User {
     @NotNull(message = "Чтобы обновить пользователя нужно его ID", groups = Update.class)
     Long id;
     @NotNull(message = "Чтобы зарегестрироваться нужен email", groups = Create.class)
     @Email(message = "must be a well-formed email address")
     String email;
-    @NotBlank
+    @NotBlank(message = "must not be blank", groups = Create.class)
     String login;
     String name;
     @BirthdayAnnotation

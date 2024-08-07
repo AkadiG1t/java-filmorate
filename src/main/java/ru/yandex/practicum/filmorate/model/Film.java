@@ -16,10 +16,9 @@ import java.time.LocalDate;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Film {
-    @NotNull(message = "Для того чтобы обновить данные нужено значение ID", groups = Update.class)
+    @NotNull(groups = Update.class)
     Long id;
-    @NotNull(message = "Филь должен быть с названием", groups = Create.class)
-    @NotBlank
+    @NotBlank(groups = Create.class)
     String name;
     @Length(max = 200, message = "Длинна сообщения не может быть больше 200 символов")
     String description;

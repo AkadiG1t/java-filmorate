@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.filmorate.exception.ValidateException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.FilmService;
 
@@ -24,6 +25,9 @@ public class FilmController {
     @PostMapping
     public Film create(@RequestBody @Valid Film film) {
         log.info("Попытка создать новый объект Film");
+        if (film.getName() == null || film.getName().isBlank()) {
+            throw new ValidateException();
+        }
         Film createdFilm = filmService.createFilm(film);
         log.info("Новый фильм с ID {} создан", film.getId());
 

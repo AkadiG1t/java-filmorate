@@ -12,13 +12,11 @@ import ru.yandex.practicum.filmorate.maker.Create;
 import ru.yandex.practicum.filmorate.maker.Update;
 import java.time.LocalDate;
 
-
-@Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Data
 public class Film {
     @NotNull(groups = Update.class)
     Long id;
-    @NotBlank(groups = Create.class)
     String name;
     @Length(max = 200)
     String description;

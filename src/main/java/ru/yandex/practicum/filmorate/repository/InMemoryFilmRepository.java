@@ -17,9 +17,7 @@ public class InMemoryFilmRepository implements FilmRepository {
 
     @Override
     public Film save(Film film) {
-        if (film.getName() == null) {
-            throw new ValidateException();
-        }
+
         film.setId(++filmId);
         films.put(film.getId(), film);
 

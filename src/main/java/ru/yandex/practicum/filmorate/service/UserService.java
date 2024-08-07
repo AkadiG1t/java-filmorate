@@ -3,6 +3,7 @@ package ru.yandex.practicum.filmorate.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.repository.InMemoryUserRepository;
 import ru.yandex.practicum.filmorate.repository.UserRepository;
 
 import java.util.Collection;
@@ -10,7 +11,7 @@ import java.util.Collection;
 @Service
 @AllArgsConstructor
 public class UserService {
-    private final UserRepository userRepository;
+    private final UserRepository userRepository = new InMemoryUserRepository();
 
     public Collection<User> getAllUsers() {
         return userRepository.findAll();

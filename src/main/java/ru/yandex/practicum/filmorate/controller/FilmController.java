@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.maker.Create;
 import ru.yandex.practicum.filmorate.maker.Update;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.repository.InMemoryFilmRepository;
 import ru.yandex.practicum.filmorate.service.FilmService;
 
 import java.util.Collection;
@@ -16,7 +17,7 @@ import java.util.Collection;
 @RequestMapping("/films")
 @AllArgsConstructor
 public class FilmController {
-   private final FilmService filmService;
+   private final FilmService filmService = new FilmService();
 
     @GetMapping
     public Collection<Film> allFilms() {

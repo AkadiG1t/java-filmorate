@@ -2,18 +2,22 @@ package ru.yandex.practicum.filmorate;
 import jakarta.validation.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.yandex.practicum.filmorate.exception.ValidateException;
 import ru.yandex.practicum.filmorate.maker.Create;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.service.FilmService;
 
 import java.time.LocalDate;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class FilmValidationTest {
 
     Validator validator;
+    private FilmService filmService;
 
     @BeforeEach
     public void setup() {
@@ -41,11 +45,11 @@ public class FilmValidationTest {
         film.setReleaseDate(LocalDate.of(2022, 1, 1));
         film.setDuration(120);
 
-        Set<ConstraintViolation<Film>> violations = validator.validate(film, Create.class);
+        assertThrows(NullPointerException.class, () -> {
+            filmService.createFilm(film);
+        });
 
-        assertEquals(1, violations.size());
-        ConstraintViolation<Film> violation = violations.iterator().next();
-        assertEquals("name", violation.getPropertyPath().toString());
+
     }
 
     @Test

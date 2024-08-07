@@ -26,7 +26,7 @@ public class FilmController {
     public Film create(@RequestBody @Valid Film film) {
         log.info("Попытка создать новый объект Film");
         if (film.getName() == null || film.getName().isBlank()) {
-            throw new ValidateException();
+            throw new NullPointerException();
         }
         Film createdFilm = filmService.createFilm(film);
         log.info("Новый фильм с ID {} создан", film.getId());

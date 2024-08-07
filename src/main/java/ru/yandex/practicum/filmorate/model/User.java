@@ -18,13 +18,13 @@ import java.time.LocalDate;
 public class User {
     @NotNull(groups = Update.class)
     Long id;
-    @Email
-    @NotBlank(groups = Create.class)
+    @Email(message = "must be a well-formed email address")
+    @NotBlank(groups = Create.class, message = "must not be blank")
     String email;
-    @NotBlank(groups = Create.class)
+    @NotBlank(groups = Create.class, message = "must not be blank")
     String login;
     String name;
     @BirthdayAnnotation
-    @NotNull(groups = Create.class)
+    @NotNull(groups = Create.class, message = "must not be nul")
     private LocalDate birthday;
 }

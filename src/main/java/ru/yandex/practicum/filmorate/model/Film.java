@@ -18,14 +18,14 @@ import java.time.LocalDate;
 public class Film {
     @NotNull(groups = Update.class)
     Long id;
-    @NotBlank
+    @NotBlank(groups = Create.class)
     String name;
-    @Length(max = 200, message = "Длинна сообщения не может быть больше 200 символов")
+    @Length(max = 200)
     String description;
     @ReleaseDateAnnotation
     @NotNull(groups = Create.class)
     LocalDate releaseDate;
-    @Min(value = 0, message = "Длительность фильма не может быть меньше 0")
+    @Min(value = 0)
     Integer duration;
 
 }

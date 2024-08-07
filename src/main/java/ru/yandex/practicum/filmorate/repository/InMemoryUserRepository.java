@@ -16,6 +16,10 @@ public class InMemoryUserRepository implements UserRepository {
 
     @Override
     public User save(User user) {
+        if (user.getName() == null || user.getName().isBlank()) {
+            user.setName(user.getLogin());
+        }
+
         user.setId(++userId);
         users.put(user.getId(), user);
 

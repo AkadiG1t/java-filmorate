@@ -16,15 +16,15 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
 public class User {
-    @NotNull(message = "Чтобы обновить пользователя нужно его ID", groups = Update.class)
+    @NotNull(groups = Update.class)
     Long id;
-    @NotNull(message = "Чтобы зарегестрироваться нужен email", groups = Create.class)
-    @Email(message = "must be a well-formed email address")
+    @Email
+    @NotBlank(groups = Create.class)
     String email;
-    @NotBlank(message = "must not be blank", groups = Create.class)
+    @NotBlank(groups = Create.class)
     String login;
     String name;
     @BirthdayAnnotation
-    @NotNull(message = "must not be null", groups = Create.class)
+    @NotBlank(groups = Create.class)
     private LocalDate birthday;
 }

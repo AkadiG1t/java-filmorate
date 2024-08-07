@@ -43,7 +43,7 @@ public class UserValidatorTest {
 
         Set<ConstraintViolation<User>> violations = validator.validate(user, Create.class);
         assertEquals(1, violations.size());
-        assertEquals("Чтобы зарегестрироваться нужен email", violations.iterator().next().getMessage());
+        assertEquals("не должно равняться null", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -56,7 +56,7 @@ public class UserValidatorTest {
 
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         assertEquals(1, violations.size());
-        assertEquals("must be a well-formed email address", violations.iterator().next().getMessage());
+        assertEquals("должно иметь формат адреса электронной почты", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -68,7 +68,7 @@ public class UserValidatorTest {
 
         Set<ConstraintViolation<User>> violations = validator.validate(user, Create.class);
         assertEquals(1, violations.size());
-        assertEquals("must not be blank", violations.iterator().next().getMessage());
+        assertEquals("не должно быть пустым", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -80,6 +80,6 @@ public class UserValidatorTest {
 
         Set<ConstraintViolation<User>> violations = validator.validate(user, Create.class);
         assertEquals(1, violations.size());
-        assertEquals("must not be null", violations.iterator().next().getMessage());
+        assertEquals("не должно равняться null", violations.iterator().next().getMessage());
     }
 }

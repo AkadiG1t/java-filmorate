@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.repository;
 
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
+import ru.yandex.practicum.filmorate.exception.ValidateException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.util.*;
@@ -16,6 +17,9 @@ public class InMemoryFilmRepository implements FilmRepository {
 
     @Override
     public Film save(Film film) {
+        if (film.getName() == null) {
+            throw new ValidateException();
+        }
         film.setId(++filmId);
         films.put(film.getId(), film);
 

@@ -41,7 +41,7 @@ public class FilmValidationTest {
         film.setReleaseDate(LocalDate.of(2022, 1, 1));
         film.setDuration(120);
 
-        Set<ConstraintViolation<Film>> violations = validator.validate(film);
+        Set<ConstraintViolation<Film>> violations = validator.validate(film, Create.class);
 
         assertEquals(1, violations.size());
         ConstraintViolation<Film> violation = violations.iterator().next();

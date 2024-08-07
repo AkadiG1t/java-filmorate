@@ -1,73 +1,41 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.data.DataMap;
-import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.service.UserService;
 
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Collection;
 
 @Slf4j
 @RestController
+@AllArgsConstructor
 @RequestMapping("/users")
 public class UserController {
-    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM,dd");
-    private static Long userId = 0L;
-    private static final DataMap dataMap = new DataMap();
+    private final UserService userService;
 
     @GetMapping
     public Collection<User> users() {
-        return new ArrayList<>(dataMap.getUsers().values());
+        return userService.getAllUsers();
     }
 
     @PostMapping
     public User create(@RequestBody @Valid User user) {
         log.info("Попытка создать нового пользователя");
-
-        if (user.getName() == null || user.getName().isBlank()) {
-            user.setName(user.getLogin());
-        }
-
-        user.setId(++userId);
-        dataMap.getUsers().put(user.getId(), user);
-
+        User createdUser = userService.createUser(user);
         log.info("Новый пользователь создан с ID {}", user.getId());
 
-        return user;
+        return createdUser;
     }
 
     @PutMapping
     public User update(@RequestBody @Valid User user) {
         log.info("Попытка обновления данных пользователя с ID {}", user.getId());
-
-        if (!dataMap.getUsers().containsKey(user.getId())) {
-            throw new NotFoundException(user.getId());
-        }
-
-        User oldUser = dataMap.getUsers().get(user.getId());
-
-        if (user.getEmail() != null) {
-            oldUser.setEmail(user.getEmail());
-        }
-
-        if (user.getLogin() != null) {
-            oldUser.setLogin(user.getLogin());
-        }
-
-        if (user.getName() != null) {
-            oldUser.setName(user.getName());
-        }
-
-        if (user.getBirthday() != null) {
-            oldUser.setBirthday(user.getBirthday());
-        }
-
+        User updatedUser = userService.updateUser(user);
         log.info("Данные пользоваетля с ID {} обновлены", user.getId());
 
-        return oldUser;
+        return updatedUser;
     }
 }

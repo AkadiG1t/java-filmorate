@@ -1,65 +1,41 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.data.DataMap;
-import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.service.FilmService;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 @Slf4j
 @RestController
 @RequestMapping("/films")
+@AllArgsConstructor
 public class FilmController {
-    private static long filmId = 0L;
-    static DataMap dataMap = new DataMap();
+   private final FilmService filmService;
 
     @GetMapping
     public Collection<Film> allFilms() {
-        return new ArrayList<>(dataMap.getFilms().values());
+        return filmService.getAllFilms();
     }
 
     @PostMapping
     public Film create(@RequestBody @Valid Film film) {
         log.info("Попытка создать новый объект Film");
-        film.setId(++filmId);
-        dataMap.getFilms().put(film.getId(), film);
-
+        Film createdFilm = filmService.createFilm(film);
         log.info("Новый фильм с ID {} создан", film.getId());
+
         return film;
     }
 
     @PutMapping
     public Film update(@RequestBody @Valid Film film) {
         log.info("Обновляем данные фильма с ID: {}", film.getId());
-
-        if (!dataMap.getFilms().containsKey(film.getId())) {
-            throw new NotFoundException(film.getId());
-        }
-
-        Film oldFilm = dataMap.getFilms().get(film.getId());
-
-        if (film.getDuration() != null) {
-            oldFilm.setDuration(film.getDuration());
-        }
-
-        if (film.getReleaseDate() != null) {
-            oldFilm.setReleaseDate(film.getReleaseDate());
-        }
-
-        if (film.getName() != null) {
-            oldFilm.setName(film.getName());
-        }
-
-        if (film.getDescription() != null) {
-            oldFilm.setDescription(film.getDescription());
-        }
-
+        Film updatedFilm = filmService.updateFilm(film);
         log.info("Данные о фильме с ID: {} обновлены", film.getId());
 
-        return oldFilm;
+        return updatedFilm;
     }
 }

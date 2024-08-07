@@ -65,9 +65,9 @@ public class UserValidatorTest {
         user.setName("Test User");
         user.setBirthday(LocalDate.of(1990, 1, 1));
 
-        Set<ConstraintViolation<User>> violations = validator.validate(user, Create.class);
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
         assertEquals(1, violations.size());
-        assertEquals("must not be null", violations.iterator().next().getMessage());
+        assertEquals("не должно быть пустым", violations.iterator().next().getMessage());
     }
 
     @Test

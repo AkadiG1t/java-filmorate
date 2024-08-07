@@ -3,7 +3,9 @@ package ru.yandex.practicum.filmorate.model;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 import ru.yandex.practicum.filmorate.annotations.BirthdayAnnotation;
 import ru.yandex.practicum.filmorate.maker.Create;
 import ru.yandex.practicum.filmorate.maker.Update;
@@ -12,16 +14,16 @@ import java.time.LocalDate;
 
 
 @Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
     @NotNull(message = "Чтобы обновить пользователя нужно его ID", groups = Update.class)
-    private Long id;
+    Long id;
     @NotNull(message = "Чтобы зарегестрироваться нужен email", groups = Create.class)
     @Email(message = "must be a well-formed email address")
-    private String email;
-    @NotNull(message = "must not be null", groups = Create.class)
+    String email;
     @NotBlank
-    private String login;
-    private String name;
+    String login;
+    String name;
     @BirthdayAnnotation
     @NotNull(message = "must not be null", groups = Create.class)
     private LocalDate birthday;

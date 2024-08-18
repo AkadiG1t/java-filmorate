@@ -3,6 +3,7 @@ package ru.yandex.practicum.filmorate.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
+import ru.yandex.practicum.filmorate.exception.ValidateException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.repository.UserRepository;
 import java.util.Collection;
@@ -63,6 +64,10 @@ public class UserServiceImpl implements UserService {
     public User create(User user) {
         if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
+        }
+
+        if (user.getLogin().contains(" ")) {
+            throw new ValidateException("Логин не может содержать пробелов");
         }
 
         return userRepository.save(user);

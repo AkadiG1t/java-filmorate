@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User create(@RequestBody @Validated(Create.class) User user) {
+    public User create(@RequestBody @Valid @Validated(Create.class) User user) {
         log.info("Попытка создать нового пользователя");
         User createdUser = userService.create(user);
         log.info("Новый пользователь создан с ID {}", user.getId());

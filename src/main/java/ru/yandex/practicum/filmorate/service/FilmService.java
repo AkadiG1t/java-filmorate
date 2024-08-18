@@ -1,28 +1,24 @@
 package ru.yandex.practicum.filmorate.service;
 
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.repository.FilmRepository;
-import ru.yandex.practicum.filmorate.repository.InMemoryFilmRepository;
 
 import java.util.Collection;
 
-@Service
-@AllArgsConstructor
-public class FilmService {
-    private final FilmRepository filmRepository = new InMemoryFilmRepository();
+public interface FilmService {
+    void putLike(long id, long userId);
 
 
-    public Collection<Film> getAllFilms() {
-        return filmRepository.getAll();
-    }
+    void deleteLike(long id, long userId);
 
-    public Film createFilm(Film film) {
-        return filmRepository.save(film);
-    }
+    Collection<Film> mostPopularFilms(Long countLikes);
 
-    public Film updateFilm(Film film) {
-        return filmRepository.update(film);
-    }
+    Collection<Film> mostPotularFilms();
+
+    Collection<Film> getAll();
+
+    Film create(Film film);
+
+    Film update(Film film);
+
+    Film get(Long id);
 }

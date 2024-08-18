@@ -2,9 +2,9 @@ package ru.yandex.practicum.filmorate;
 import jakarta.validation.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.yandex.practicum.filmorate.maker.Create;
+import ru.yandex.practicum.filmorate.marker.Create;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.service.FilmService;
+import ru.yandex.practicum.filmorate.service.FilmServiceImpl;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class FilmValidationTest {
 
     Validator validator;
-    private FilmService filmService;
+    private FilmServiceImpl filmService;
 
     @BeforeEach
     public void setup() {
@@ -45,7 +45,7 @@ public class FilmValidationTest {
         film.setDuration(120);
 
         assertThrows(NullPointerException.class, () -> {
-            filmService.createFilm(film);
+            filmService.create(film);
         });
 
 

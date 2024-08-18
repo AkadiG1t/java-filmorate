@@ -7,8 +7,8 @@ import lombok.Data;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.validator.constraints.Length;
 import ru.yandex.practicum.filmorate.annotations.ReleaseDateAnnotation;
-import ru.yandex.practicum.filmorate.maker.Create;
-import ru.yandex.practicum.filmorate.maker.Update;
+import ru.yandex.practicum.filmorate.marker.Create;
+import ru.yandex.practicum.filmorate.marker.Update;
 import java.time.LocalDate;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)

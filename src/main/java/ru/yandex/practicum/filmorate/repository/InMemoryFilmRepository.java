@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class InMemoryFilmRepository implements FilmRepository {
-    private final static Map<Long, Set<Long>> likes = new HashMap<>();
+    private static final Map<Long, Set<Long>> likes = new HashMap<>();
     private static final Map<Long, Film> films = new HashMap<>();
     private static Long filmId = 0L;
 
@@ -25,7 +25,7 @@ public class InMemoryFilmRepository implements FilmRepository {
 
     @Override
     public Collection<Film> mostPopularFilms(long countLikes) {
-        Set <Long> popularFilms = likes.entrySet().stream()
+        Set<Long> popularFilms = likes.entrySet().stream()
                 .filter(entry -> entry.getValue().size() >= countLikes)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toSet());

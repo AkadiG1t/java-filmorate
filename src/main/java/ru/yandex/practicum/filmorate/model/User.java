@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import ru.yandex.practicum.filmorate.annotations.BirthdayAnnotation;
 import ru.yandex.practicum.filmorate.marker.Create;
 import ru.yandex.practicum.filmorate.marker.Update;

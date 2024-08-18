@@ -1,10 +1,12 @@
 package ru.yandex.practicum.filmorate.controller;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.filmorate.marker.Create;
+import ru.yandex.practicum.filmorate.marker.Update;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
 
@@ -29,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User create(@RequestBody @Valid User user) {
+    public User create(@RequestBody @Validated(Create.class) User user) {
         log.info("Попытка создать нового пользователя");
         User createdUser = userService.create(user);
         log.info("Новый пользователь создан с ID {}", user.getId());
@@ -38,7 +40,7 @@ public class UserController {
     }
 
     @PutMapping
-    public User update(@RequestBody @Valid User user) {
+    public User update(@RequestBody @Validated(Update.class) User user) {
         log.info("Попытка обновления данных пользователя с ID {}", user.getId());
         User updatedUser = userService.update(user);
         log.info("Данные пользоваетля с ID {} обновлены", user.getId());

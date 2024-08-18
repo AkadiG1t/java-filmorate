@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.FilmServiceImpl;
@@ -28,7 +29,7 @@ public class FilmController {
    }
 
    @PostMapping
-   public Film create(@RequestBody @Valid Film film) {
+   public Film create(@RequestBody @Validated Film film) {
        log.info("Попытка создать новый объект Film");
        if (film.getName() == null || film.getName().isBlank()) {
            throw new NullPointerException();

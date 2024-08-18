@@ -63,7 +63,7 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public Film get(Long id) {
-        if(filmRepository.get(id).isEmpty()) {
+        if (filmRepository.get(id).isEmpty()) {
           throw new NotFoundException(id);
         }
         return filmRepository.get(id).get();

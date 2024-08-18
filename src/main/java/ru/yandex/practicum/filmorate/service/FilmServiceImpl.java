@@ -32,10 +32,10 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public void deleteLike(long id, long userId) {
         if (filmRepository.get(id).isEmpty()) {
-            throw new ValidateException("Такого фильма нет в списке");
+            throw new NotFoundException("Такого фильма нет в списке");
         }
         if (!filmRepository.getUserId(id).contains(userId)) {
-            throw new ValidateException("Этот пользователь не ставил лайк этому фильму");
+            throw new NotFoundException("Этот пользователь не ставил лайк этому фильму");
         }
 
         filmRepository.deleteLike(id, userId);

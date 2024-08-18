@@ -15,12 +15,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteFriend(long userId, long friendId) {
-        if (get(userId) == null) {
-            throw new ValidateException("Такого пользователя не существует");
+        if (userRepository.get(userId).isEmpty()) {
+            throw new NotFoundException("Такого пользователя не существует");
         }
 
-        if (get(friendId) == null) {
-            throw new ValidateException("Пользователя которого вы пытаетесь добавить в друзья не существует");
+        if (userRepository.get(friendId).isEmpty()) {
+            throw new NotFoundException("Пользователя которого вы пытаетесь удалит из друзей не существует");
         }
 
         userRepository.deleteFriend(userId, friendId);

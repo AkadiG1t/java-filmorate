@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.repository;
 
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
@@ -8,6 +9,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
+@Getter
 public class InMemoryFilmRepository implements FilmRepository {
     private static final Map<Long, Set<Long>> likes = new HashMap<>();
     private static final Map<Long, Film> films = new HashMap<>();
@@ -16,6 +18,11 @@ public class InMemoryFilmRepository implements FilmRepository {
     @Override
     public void putLike(long id, long userId) {
         likes.get(id).add(userId);
+    }
+
+    @Override
+    public Set<Long> getUserId(long id) {
+        return new HashSet<>(likes.get(id));
     }
 
     @Override

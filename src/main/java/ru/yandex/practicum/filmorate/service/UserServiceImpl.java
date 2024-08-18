@@ -15,8 +15,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteFriend(long userId, long friendId) {
-        User user = get(userId);
-        User friend = get(friendId);
+        if (get(userId) == null) {
+            throw new ValidateException("Такого пользователя не существует");
+        }
+
+        if (get(friendId) == null) {
+            throw new ValidateException("Пользователя которого вы пытаетесь добавить в друзья не существует");
+        }
 
         userRepository.deleteFriend(userId, friendId);
     }
@@ -41,8 +46,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addFriend(long userId, long friendId) {
-        User user = get(userId);
-        User friend = get(friendId);
 
         userRepository.addFriends(userId, friendId);
     }

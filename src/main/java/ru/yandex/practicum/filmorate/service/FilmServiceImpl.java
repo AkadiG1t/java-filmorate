@@ -7,6 +7,8 @@ import ru.yandex.practicum.filmorate.exception.ValidateException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.repository.FilmRepository;
+import ru.yandex.practicum.filmorate.repository.InMemoryFilmRepository;
+
 import java.util.Collection;
 
 @Service
@@ -17,16 +19,25 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public void putLike(long id, long userId) {
-        Film film = get(id);
-        User user = userService.get(userId);
+        if (filmRepository.get(id).isEmpty()) {
+            throw new NotFoundException("Такого фильма нет в списке");
+        }
+
+        if (userService.get(userId) == null) {
+            throw new ValidateException("Такого пользователя не существует");
+        }
 
         filmRepository.putLike(id, userId);
     }
 
     @Override
     public void deleteLike(long id, long userId) {
-        Film film = get(id);
-        User user = userService.get(userId);
+        if (filmRepository.get(id).isEmpty()) {
+            throw new ValidateException("Такого фильма нет в списке");
+        }
+        if (!filmRepository.getUserId(id).contains(userId)) {
+            throw new ValidateException("Этот пользователь не ставил лайк этому фильму");
+        }
 
         filmRepository.deleteLike(id, userId);
     }

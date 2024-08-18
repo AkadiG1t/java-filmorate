@@ -12,8 +12,6 @@ public interface FilmService {
 
     Collection<Film> mostPopularFilms(Long countLikes);
 
-    Collection<Film> mostPotularFilms();
-
     Collection<Film> getAll();
 
     Film create(Film film);

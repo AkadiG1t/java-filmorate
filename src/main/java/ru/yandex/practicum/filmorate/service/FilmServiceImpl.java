@@ -3,6 +3,7 @@ package ru.yandex.practicum.filmorate.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
+import ru.yandex.practicum.filmorate.exception.ValidateException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.repository.FilmRepository;
@@ -47,6 +48,9 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public Film create(Film film) {
+        if (film.getName() == null || film.getName().isBlank()) {
+            throw new ValidateException("Имя не может быть пустым");
+        }
         return filmRepository.save(film);
     }
 

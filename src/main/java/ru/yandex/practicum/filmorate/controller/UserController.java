@@ -46,9 +46,7 @@ public class UserController {
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public User update(@RequestBody @Valid @Validated(Update.class) User user) {
-        log.info("Попытка обновления данных пользователя с ID {}", user.getId());
         User updatedUser = userService.update(user);
-        log.info("Данные пользоваетля с ID {} обновлены", user.getId());
 
         return updatedUser;
     }

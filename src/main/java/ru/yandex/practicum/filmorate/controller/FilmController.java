@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.marker.Create;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.service.FilmService;
 import ru.yandex.practicum.filmorate.service.FilmServiceImpl;
 
 import java.util.Collection;
@@ -19,8 +20,8 @@ import java.util.Collection;
 @RequestMapping("/films")
 @RequiredArgsConstructor
 public class FilmController {
-   private FilmServiceImpl filmService;
-    private Logger log;
+   private final FilmService filmService = new FilmServiceImpl();
+   private Logger log;
 
     @GetMapping("/{id}")
    public Film get(@PathVariable long id) {

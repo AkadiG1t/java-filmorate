@@ -6,15 +6,17 @@ import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidateException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.repository.FilmRepository;
+import ru.yandex.practicum.filmorate.repository.InMemoryFilmRepository;
 
 
 import java.util.Collection;
 
-@RequiredArgsConstructor
+
 @Service
+@RequiredArgsConstructor
 public class FilmServiceImpl implements FilmService {
-    private final FilmRepository filmRepository;
-    private final UserService userService;
+    private final FilmRepository filmRepository = new InMemoryFilmRepository();
+    private final UserService userService = new UserServiceImpl();
 
     @Override
     public void putLike(long id, long userId) {

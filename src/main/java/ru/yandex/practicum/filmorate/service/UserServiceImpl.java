@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Collection<User> getFriends(long userId) {
+    public Collection<Long> getFriends(long userId) {
         if (userRepository.getAllFriends(userId).isEmpty()) {
             throw new NotFoundException("У этого пользователя пока нет друзей");
         }

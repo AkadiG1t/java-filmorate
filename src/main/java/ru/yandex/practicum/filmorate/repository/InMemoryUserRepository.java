@@ -21,17 +21,13 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
-    public Collection<User> getAllFriends(long userId) {
-       Set<Long> friendsIds = friends.get(userId);
+    public Collection<Long> getAllFriends(long userId) {
+       Set<Long> userFriends = friends.get(userId);
 
-       if (friendsIds == null) {
+       if (userFriends == null || userFriends.isEmpty()) {
            return Collections.emptyList();
        }
-
-        return friendsIds.stream()
-                .map(users::get)
-                .filter(Objects::nonNull)
-                .toList();
+       return new ArrayList<>(userFriends);
     }
 
     @Override

@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface UserRepository {
     void deleteFriend(long userId, long friendId);
 
-    Collection<User> getAllFriends(long userId);
+    Collection<Long> getAllFriends(long userId);
 
     Collection<User> getCommonFriends(long userId, long otherId);
 

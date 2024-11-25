@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.controller;
 
-import ch.qos.logback.classic.Logger;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +21,6 @@ import java.util.Collection;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService = new UserServiceImpl();
-    private Logger log;
 
     @GetMapping("/{id}")
     public User get(@PathVariable long id) {
@@ -63,7 +61,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}/friends")
-    public Collection<User> getAllFriends(@PathVariable long id) {
+    public Collection<Long> getAllFriends(@PathVariable long id) {
         return userService.getFriends(id);
     }
 

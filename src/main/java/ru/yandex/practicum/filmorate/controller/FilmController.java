@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.controller;
 
-import ch.qos.logback.classic.Logger;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +20,6 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class FilmController {
    private final FilmService filmService = new FilmServiceImpl();
-   private Logger log;
 
     @GetMapping("/{id}")
    public Film get(@PathVariable long id) {

@@ -34,9 +34,7 @@ public class FilmController {
 
    @PostMapping
    public Film create(@RequestBody @Valid @Validated(Create.class) Film film) {
-       log.info("Попытка создать новый объект Film");
        Film createdFilm = filmService.create(film);
-       log.info("Новый фильм с ID {} создан", film.getId());
 
        return film;
    }

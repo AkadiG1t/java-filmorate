@@ -12,6 +12,7 @@ import ru.yandex.practicum.filmorate.marker.Create;
 import ru.yandex.practicum.filmorate.marker.Update;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
+import ru.yandex.practicum.filmorate.service.UserServiceImpl;
 
 import java.util.Collection;
 
@@ -20,7 +21,7 @@ import java.util.Collection;
 @RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController {
-    private UserService userService;
+    private final UserService userService = new UserServiceImpl();
     private Logger log;
 
     @GetMapping("/{id}")
@@ -37,9 +38,7 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public User create(@RequestBody @Valid @Validated(Create.class) User user) {
-        log.info("Попытка создать нового пользователя");
         User createdUser = userService.create(user);
-        log.info("Новый пользователь создан с ID {}", user.getId());
 
         return createdUser;
     }

@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
         if (userRepository.get(userId).isEmpty()) {
             throw new NotFoundException("Этот пользователь не найден");
         }
-        if (userRepository.get(userId).isEmpty()) {
+        if (userRepository.get(friendId).isEmpty()) {
             throw new NotFoundException("Пользователь которого вы пытаетесь добавить в друзья не найден");
         }
         userRepository.addFriends(userId, friendId);

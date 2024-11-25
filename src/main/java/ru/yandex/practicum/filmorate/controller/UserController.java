@@ -46,9 +46,8 @@ public class UserController {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public User update(@RequestBody @Valid @Validated(Update.class) User user) {
-        User updatedUser = userService.update(user);
 
-        return updatedUser;
+        return userService.update(user);
     }
 
     @PutMapping("/{id}/friends/{friendId}")

@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @PutMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.CREATED)
     public User update(@RequestBody @Valid @Validated(Update.class) User user) {
         User updatedUser = userService.update(user);
 

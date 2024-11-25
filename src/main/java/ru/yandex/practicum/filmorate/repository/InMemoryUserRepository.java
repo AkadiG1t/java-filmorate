@@ -59,12 +59,8 @@ public class InMemoryUserRepository implements UserRepository {
 
     @Override
     public void addFriends(long userId, long friendId) {
-        if (friends.get(userId) == null) {
-            friends.put(userId, new HashSet<>());
-        }
-        if (friends.get(friendId) == null) {
-            friends.put(friendId, new HashSet<>());
-        }
+        friends.computeIfAbsent(userId, k -> new HashSet<>());
+        friends.computeIfAbsent(friendId, k -> new HashSet<>());
         friends.get(userId).add(friendId);
         friends.get(friendId).add(userId);
     }
@@ -104,5 +100,4 @@ public class InMemoryUserRepository implements UserRepository {
 
         return oldUser;
     }
-
 }

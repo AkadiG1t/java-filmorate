@@ -23,7 +23,6 @@ public class UserServiceImpl implements UserService {
         if (userRepository.get(friendId).isEmpty()) {
             throw new NotFoundException("Пользователя которого вы пытаетесь удалит из друзей не существует");
         }
-
         userRepository.deleteFriend(userId, friendId);
     }
 
@@ -81,7 +80,6 @@ public class UserServiceImpl implements UserService {
         if (user.getLogin().contains(" ")) {
             throw new ValidateException("Логин не может содержать пробелов");
         }
-
         return userRepository.save(user);
     }
 

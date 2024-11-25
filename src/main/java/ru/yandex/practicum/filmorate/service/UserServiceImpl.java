@@ -11,7 +11,7 @@ import java.util.Collection;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Override
     public void deleteFriend(long userId, long friendId) {

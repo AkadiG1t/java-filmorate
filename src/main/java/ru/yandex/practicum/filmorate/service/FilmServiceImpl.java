@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.service;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
@@ -11,10 +12,10 @@ import ru.yandex.practicum.filmorate.repository.FilmRepository;
 import java.util.Collection;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class FilmServiceImpl implements FilmService {
-    private final FilmRepository filmRepository;
-    private final UserService userService;
+    private FilmRepository filmRepository;
+    private UserService userService;
 
     @Override
     public void putLike(long id, long userId) {

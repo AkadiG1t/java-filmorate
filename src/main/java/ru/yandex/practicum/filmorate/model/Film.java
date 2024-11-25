@@ -26,44 +26,4 @@ public class Film {
     LocalDate releaseDate;
     @Min(value = 0)
     Integer duration;
-
-    public void setId(@NotNull(groups = Update.class) Long id) {
-        this.id = id;
-    }
-
-    public void setName(@NotBlank(groups = Create.class) String name) {
-        this.name = name;
-    }
-
-    public void setDescription(@Length(max = 200) String description) {
-        this.description = description;
-    }
-
-    public void setReleaseDate(@NotNull(groups = Create.class) LocalDate releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public void setDuration(@Min(value = 0) Integer duration) {
-        this.duration = duration;
-    }
-
-    public @NotNull(groups = Update.class) Long getId() {
-        return id;
-    }
-
-    public @NotBlank(groups = Create.class) String getName() {
-        return name;
-    }
-
-    public @Length(max = 200) String getDescription() {
-        return description;
-    }
-
-    public @NotNull(groups = Create.class) LocalDate getReleaseDate() {
-        return releaseDate;
-    }
-
-    public @Min(value = 0) Integer getDuration() {
-        return duration;
-    }
 }

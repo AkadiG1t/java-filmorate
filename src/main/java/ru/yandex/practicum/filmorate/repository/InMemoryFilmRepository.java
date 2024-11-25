@@ -17,7 +17,7 @@ public class InMemoryFilmRepository implements FilmRepository {
 
     @Override
     public void putLike(long id, long userId) {
-        likes.get(id).add(userId);
+        likes.computeIfAbsent(id, k -> new HashSet<>()).add(userId);
     }
 
     @Override
@@ -27,32 +27,31 @@ public class InMemoryFilmRepository implements FilmRepository {
 
     @Override
     public void deleteLike(long id, long userId) {
-        likes.get(id).remove(userId);
+        Set<Long> userLikes = likes.get(id);
+        if (userLikes != null) {
+            userLikes.remove(userId);
+        }
     }
 
     @Override
     public Collection<Film> mostPopularFilms(long countLikes) {
-        Set<Long> popularFilms = likes.entrySet().stream()
+        return likes.entrySet().stream()
                 .filter(entry -> entry.getValue().size() >= countLikes)
                 .map(Map.Entry::getKey)
-                .collect(Collectors.toSet());
-
-        return popularFilms.stream()
                 .map(films::get)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
-
     }
 
     @Override
-    public Collection<Film> mostPotularFilms() {
+    public Collection<Film> mostPopularFilms() {
         return likes.entrySet().stream()
                 .sorted((entry1, entry2) -> Integer.compare(entry2.getValue().size(), entry1.getValue().size()))
                 .limit(10)
                 .map(Map.Entry::getKey)
                 .map(films::get)
                 .filter(Objects::nonNull)
-                .toList();
+                .collect(Collectors.toList());
     }
 
 
@@ -85,21 +84,10 @@ public class InMemoryFilmRepository implements FilmRepository {
 
         Film oldFilm = films.get(film.getId());
 
-        if (film.getDuration() != null) {
-            oldFilm.setDuration(film.getDuration());
-        }
-
-        if (film.getReleaseDate() != null) {
-            oldFilm.setReleaseDate(film.getReleaseDate());
-        }
-
-        if (film.getName() != null) {
-            oldFilm.setName(film.getName());
-        }
-
-        if (film.getDescription() != null) {
-            oldFilm.setDescription(film.getDescription());
-        }
+        Optional.ofNullable(film.getDuration()).ifPresent(oldFilm::setDuration);
+        Optional.ofNullable(film.getReleaseDate()).ifPresent(oldFilm::setReleaseDate);
+        Optional.ofNullable(film.getName()).ifPresent(oldFilm::setName);
+        Optional.ofNullable(film.getDescription()).ifPresent(oldFilm::setDescription);
 
         return oldFilm;
     }

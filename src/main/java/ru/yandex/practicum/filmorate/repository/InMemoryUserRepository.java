@@ -14,7 +14,10 @@ public class InMemoryUserRepository implements UserRepository {
 
     @Override
     public void deleteFriend(long userId, long friendId) {
-        friends.get(userId).remove(friendId);
+        Set<Long> userFriends = friends.get(userId);
+        if (userFriends != null) {
+            userFriends.remove(friendId);
+        }
     }
 
     @Override
@@ -34,9 +37,9 @@ public class InMemoryUserRepository implements UserRepository {
     @Override
     public Collection<User> getCommonFriends(long userId, long otherId) {
         Set<Long> usersFriends = friends.get(userId);
-        Set<Long> otherUserFriends = friends.get(userId);
+        Set<Long> otherUserFriends = friends.get(otherId);  // Исправлено
 
-        if (usersFriends.isEmpty() || otherUserFriends.isEmpty()) {
+        if (usersFriends == null || otherUserFriends == null || usersFriends.isEmpty() || otherUserFriends.isEmpty()) {
             return Collections.emptyList();
         }
 
@@ -51,6 +54,12 @@ public class InMemoryUserRepository implements UserRepository {
 
     @Override
     public void addFriends(long userId, long friendId) {
+        if (friends.get(userId) == null) {
+            friends.put(userId, new HashSet<>());
+        }
+        if (friends.get(friendId) == null) {
+            friends.put(friendId, new HashSet<>());
+        }
         friends.get(userId).add(friendId);
         friends.get(friendId).add(userId);
     }
@@ -83,21 +92,10 @@ public class InMemoryUserRepository implements UserRepository {
 
         User oldUser = users.get(user.getId());
 
-        if (user.getName() != null) {
-            oldUser.setName(user.getName());
-        }
-
-        if (user.getBirthday() != null) {
-            oldUser.setBirthday(user.getBirthday());
-        }
-
-        if (user.getEmail() != null) {
-            oldUser.setEmail(user.getEmail());
-        }
-
-        if (user.getLogin() != null) {
-            oldUser.setLogin(user.getLogin());
-        }
+        Optional.ofNullable(user.getName()).ifPresent(oldUser::setName);
+        Optional.ofNullable(user.getBirthday()).ifPresent(oldUser::setBirthday);
+        Optional.ofNullable(user.getEmail()).ifPresent(oldUser::setEmail);
+        Optional.ofNullable(user.getLogin()).ifPresent(oldUser::setLogin);
 
         return oldUser;
     }

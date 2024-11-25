@@ -1,6 +1,6 @@
 package ru.yandex.practicum.filmorate.service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidateException;
@@ -10,11 +10,11 @@ import ru.yandex.practicum.filmorate.repository.FilmRepository;
 
 import java.util.Collection;
 
+@RequiredArgsConstructor
 @Service
-@AllArgsConstructor
 public class FilmServiceImpl implements FilmService {
-    private FilmRepository filmRepository;
-    private UserService userService;
+    private final FilmRepository filmRepository;
+    private final UserService userService;
 
     @Override
     public void putLike(long id, long userId) {
@@ -43,10 +43,9 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public Collection<Film> mostPopularFilms(Long countLikes) {
-        if (countLikes == null || countLikes == 0) {
-            return filmRepository.mostPotularFilms();
+        if (countLikes == null || countLikes <= 0) {
+            return filmRepository.mostPopularFilms();
         }
-
         return filmRepository.mostPopularFilms(countLikes);
     }
 
@@ -71,9 +70,6 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public Film get(Long id) {
-        if (filmRepository.get(id).isEmpty()) {
-          throw new NotFoundException(id);
-        }
-        return filmRepository.get(id).get();
+        return filmRepository.get(id).orElseThrow(() -> new NotFoundException(id));
     }
 }

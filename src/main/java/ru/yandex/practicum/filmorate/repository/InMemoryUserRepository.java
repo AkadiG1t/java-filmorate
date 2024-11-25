@@ -21,13 +21,22 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
-    public Collection<Long> getAllFriends(long userId) {
-       Set<Long> userFriends = friends.get(userId);
+    public Collection<User> getAllFriends(long userId) {
+        Set<Long> userFriends = friends.get(userId);
+        List<User> friendsList = new ArrayList<>();
 
-       if (userFriends == null || userFriends.isEmpty()) {
-           return Collections.emptyList();
-       }
-       return new ArrayList<>(userFriends);
+        if (userFriends == null || userFriends.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        for (Long friendId : userFriends) {
+            User friend = users.get(friendId);
+            if (friend != null) {
+                friendsList.add(friend);
+            }
+        }
+
+        return friendsList; // Возвращаем список друзей
     }
 
     @Override

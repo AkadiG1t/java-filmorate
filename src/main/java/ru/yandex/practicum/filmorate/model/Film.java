@@ -27,4 +27,12 @@ public class Film {
     @Min(value = 0)
     Integer duration;
 
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getName() {
+        return name;
+    }
+
 }

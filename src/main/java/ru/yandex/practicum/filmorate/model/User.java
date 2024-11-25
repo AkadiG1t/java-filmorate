@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import ru.yandex.practicum.filmorate.annotations.BirthdayAnnotation;
 import ru.yandex.practicum.filmorate.marker.Create;
@@ -27,4 +29,19 @@ public class User {
     @BirthdayAnnotation
     @NotNull(groups = Create.class, message = "must not be nul")
     private LocalDate birthday;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getName() {
+        return name;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getLogin() {
+        return login;
+    }
 }

@@ -21,21 +21,14 @@ public class UserServiceImpl implements UserService {
         }
 
         if (userRepository.get(friendId).isEmpty()) {
-            throw new NotFoundException("Пользователя которого вы пытаетесь удалит из друзей не существует");
+            throw new NotFoundException("Пользователя которого вы пытаетесь удалить из друзей не существует");
         }
         userRepository.deleteFriend(userId, friendId);
     }
 
     @Override
     public Collection<User> getFriends(long userId) {
-        Collection<User> friendsList = userRepository.getAllFriends(userId);
-
-        if (friendsList.isEmpty()) {
-            throw new NotFoundException("У этого пользователя пока нет друзей");
-        }
-
-        return friendsList;
-
+        return userRepository.getAllFriends(userId);
     }
 
     @Override

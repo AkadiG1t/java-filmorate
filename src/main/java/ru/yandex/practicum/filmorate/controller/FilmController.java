@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.marker.Create;
 import ru.yandex.practicum.filmorate.model.Film;
+
 import ru.yandex.practicum.filmorate.service.FilmService;
 import ru.yandex.practicum.filmorate.service.FilmServiceImpl;
 
@@ -62,7 +63,8 @@ public class FilmController {
    }
 
    @GetMapping("/popular")
-   public Collection<Film> getMostPopularFilms(@RequestParam(name = "count") Long countLikes) {
-       return filmService.mostPopularFilms(countLikes);
+   public Collection<Film> getMostPopularFilms(@RequestParam(name = "count", required = false) Long count) {
+       return filmService.mostPopularFilms(count);
    }
+
 }

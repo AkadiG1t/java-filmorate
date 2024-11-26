@@ -42,12 +42,14 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public Collection<Film> mostPopularFilms(Long countLikes) {
-        if (countLikes == null || countLikes <= 0) {
-            return filmRepository.mostPopularFilms();
-        }
-        return filmRepository.mostPopularFilms(countLikes);
+        public Collection<Film> mostPopularFilms(Long countLikes) {
+            if (countLikes == null || countLikes <= 0) {
+                countLikes = 10L;
+            }
+            return filmRepository.mostPopularFilms(countLikes);
     }
+
+
 
 
     @Override

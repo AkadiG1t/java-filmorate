@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.repository;
 
-import lombok.Getter;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
@@ -9,15 +8,21 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-@Getter
 public class InMemoryFilmRepository implements FilmRepository {
-    private static final Map<Long, Set<Long>> likes = new HashMap<>();
+    public static final Map<Long, Set<Long>> likes = new HashMap<>();
     private static final Map<Long, Film> films = new HashMap<>();
     private static Long filmId = 0L;
 
     @Override
     public void putLike(long id, long userId) {
-        likes.computeIfAbsent(id, k -> new HashSet<>()).add(userId);
+        if (id > 0 && userId > 0) {
+            if (likes.containsKey(id)) {
+                likes.get(id).add(userId);
+            } else {
+                likes.put(id, new HashSet<>());
+                likes.get(id).add(userId);
+            }
+        }
     }
 
     @Override
@@ -35,25 +40,22 @@ public class InMemoryFilmRepository implements FilmRepository {
 
     @Override
     public Collection<Film> mostPopularFilms(long countLikes) {
-        return likes.entrySet().stream()
-                .filter(entry -> entry.getValue().size() >= countLikes)
-                .map(Map.Entry::getKey)
-                .map(films::get)
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-    }
+        List<Map.Entry<Long, Integer>> filmLikeList = likes.entrySet()
+                .stream()
+                .map(entry -> new AbstractMap.SimpleEntry<>(entry.getKey(),
+                        entry.getValue().size())).sorted((entry1, entry2) -> Integer.compare(entry2.getValue(),
+                        entry1.getValue())).collect(Collectors.toList());
 
-    @Override
-    public Collection<Film> mostPopularFilms() {
-        return likes.entrySet().stream()
-                .sorted((entry1, entry2) -> Integer.compare(entry2.getValue().size(), entry1.getValue().size()))
-                .limit(10)
-                .map(Map.Entry::getKey)
-                .map(films::get)
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+        List<Film> topFilms = new ArrayList<>();
+        for (int i = 0; i < Math.min(countLikes, filmLikeList.size()); i++) {
+            Long filmId = filmLikeList.get(i).getKey();
+            Film film = films.get(filmId);
+            if (film != null) {
+                topFilms.add(film);
+            }
+        }
+        return topFilms;
     }
-
 
 
     @Override

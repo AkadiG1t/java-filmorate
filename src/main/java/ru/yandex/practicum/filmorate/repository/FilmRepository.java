@@ -17,8 +17,6 @@ public interface FilmRepository {
 
     Collection<Film> mostPopularFilms(long countLikes);
 
-    Collection<Film> mostPopularFilms();
-
     Optional<Film> get(long id);
 
     Collection<Film> getAll();

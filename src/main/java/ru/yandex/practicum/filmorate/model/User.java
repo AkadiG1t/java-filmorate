@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,6 +12,9 @@ import ru.yandex.practicum.filmorate.marker.Create;
 import ru.yandex.practicum.filmorate.marker.Update;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+
+import java.util.Set;
 
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -27,5 +31,8 @@ public class User {
     @BirthdayAnnotation
     @NotNull(groups = Create.class, message = "must not be nul")
     private LocalDate birthday;
+    @JsonIgnore
+    private final Set<Long> friends = new HashSet<>();
+
 
 }

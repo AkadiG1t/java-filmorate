@@ -1,92 +1,50 @@
 package ru.yandex.practicum.filmorate.repository;
 
+
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.*;
 
+@Slf4j
 @Component
 public class InMemoryUserRepository implements UserRepository {
-    private static final Map<Long, Set<Long>> friends = new HashMap<>();
     private static final Map<Long, User> users = new HashMap<>();
     private static Long userId = 0L;
 
-    @Override
-    public void deleteFriend(long userId, long friendId) {
-        Set<Long> userFriends = friends.get(userId);
-        if (userFriends != null) {
-            userFriends.remove(friendId);
-        }
+    public Collection<User> getAllUsers() {
+        return users.values();
     }
 
-    @Override
-    public Collection<User> getAllFriends(long userId) {
-        Set<Long> userFriends = friends.get(userId);
-        List<User> friendsList = new ArrayList<>();
-
-        if (userFriends == null || userFriends.isEmpty()) {
-            return Collections.emptyList();
-        }
-
-        for (Long friendId : userFriends) {
-            User friend = users.get(friendId);
-            if (friend != null) {
-                friendsList.add(friend);
-            }
-        }
-
-        return friendsList;
-    }
-
-    @Override
-    public Collection<User> getCommonFriends(long userId, long otherId) {
-        Set<Long> usersFriends = friends.get(userId);
-        Set<Long> otherUserFriends = friends.get(otherId);  // Исправлено
-
-        if (usersFriends == null || otherUserFriends == null || usersFriends.isEmpty() || otherUserFriends.isEmpty()) {
-            return Collections.emptyList();
-        }
-
-        Set<Long> commonFriends = new HashSet<>(usersFriends);
-        commonFriends.retainAll(otherUserFriends);
-
-        return commonFriends.stream()
-                .map(users::get)
-                .filter(Objects::nonNull)
-                .toList();
-    }
-
-    @Override
-    public void addFriends(long userId, long friendId) {
-        friends.computeIfAbsent(userId, k -> new HashSet<>());
-        friends.computeIfAbsent(friendId, k -> new HashSet<>());
-        friends.get(userId).add(friendId);
-        friends.get(friendId).add(userId);
-    }
 
     @Override
     public Optional<User> get(long id) {
+        log.info("Получение пользователя с ID: {}", id);
         return Optional.ofNullable(users.get(id));
     }
 
     @Override
     public Collection<User> findAll() {
+        log.info("Получение списка всех пользователей");
         return new ArrayList<>(users.values());
     }
 
     @Override
     public User save(User user) {
-
+        log.info("Создание нового пользователя: {}", user);
         user.setId(++userId);
         users.put(user.getId(), user);
-        friends.put(user.getId(), new HashSet<>());
 
         return user;
     }
 
     @Override
     public User update(User user) {
+        log.info("Обновление пользователя с ID: {}", user.getId());
+
         if (!users.containsKey(user.getId())) {
             throw new NotFoundException(user.getId());
         }

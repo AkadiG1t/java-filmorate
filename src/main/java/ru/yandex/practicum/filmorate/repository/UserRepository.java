@@ -8,13 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository {
-    void deleteFriend(long userId, long friendId);
-
-    Collection<User> getAllFriends(long userId);
-
-    Collection<User> getCommonFriends(long userId, long otherId);
-
-    void addFriends(long userId, long friendId);
 
     Optional<User> get(long id);
 

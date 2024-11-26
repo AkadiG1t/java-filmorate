@@ -73,7 +73,6 @@ public class UserController {
     }
 
     @GetMapping("/{id}/friends")
-    @ResponseStatus(HttpStatus.OK)
     public Collection<User> getAllFriends(@PathVariable long id) {
         log.info("Получение списка друзей пользователя с ID: {}", id);
         Collection<User> friendsList = userService.getFriends(id);

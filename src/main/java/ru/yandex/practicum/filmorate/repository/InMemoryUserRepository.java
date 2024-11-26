@@ -36,7 +36,7 @@ public class InMemoryUserRepository implements UserRepository {
             }
         }
 
-        return friendsList; // Возвращаем список друзей
+        return friendsList;
     }
 
     @Override

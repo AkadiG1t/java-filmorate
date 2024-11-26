@@ -48,10 +48,10 @@ public class FilmController {
    }
 
    @PutMapping("{id}/like/{userId}")
-   public ResponseEntity<String> putLike(@PathVariable long id, @PathVariable long userId) {
+   public ResponseEntity<Film> putLike(@PathVariable long id, @PathVariable long userId) {
        filmService.putLike(id, userId);
 
-       return ResponseEntity.ok("Вы поставили лайк фильму с id " + id);
+       return ResponseEntity.ok(filmService.get(id));
    }
 
    @DeleteMapping("/{id}/like/{userId}")

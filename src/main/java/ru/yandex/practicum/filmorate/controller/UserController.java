@@ -57,11 +57,11 @@ public class UserController {
     }
 
     @PutMapping("/{id}/friends/{friendId}")
-    public ResponseEntity<String> addFriend(@PathVariable long id, @PathVariable long friendId) {
+    public ResponseEntity<Collection<User>> addFriend(@PathVariable long id, @PathVariable long friendId) {
         log.info("Пользователь с ID: {} пытается добавить в друзья пользователя с ID: {}", id, friendId);
         userService.addFriend(id, friendId);
         log.info("Пользователь с ID: {} добавлен в друзья пользователем с ID: {}", friendId, id);
-        return ResponseEntity.ok("Пользователь с ID: " + friendId + " добавлен в друзья.");
+        return ResponseEntity.ok(userService.getFriends(id));
     }
 
     @DeleteMapping("/{id}/friends/{friendId}")

@@ -82,7 +82,7 @@ public class FilmDBStorage implements FilmRepository {
     public Film update(Film film) {
         long id = film.getId();
 
-        String countSql = "SELECT * FROM FILMS WHERE id = ?";
+        String countSql = "SELECT COUNT(*) FROM FILMS WHERE id = ?";
         int countFilms = jdbcTemplate.queryForObject(countSql, new Object[]{film.getId()}, Integer.class);
 
         if (countFilms > 0) {

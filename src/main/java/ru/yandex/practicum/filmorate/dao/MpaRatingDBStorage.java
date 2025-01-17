@@ -27,7 +27,8 @@ public class MpaRatingDBStorage implements MpaRepository {
         int countMPA = jdbcTemplate.queryForObject(sql, new Object[]{id}, Integer.class);
 
         if (countMPA > 0) {
-            return jdbcTemplate.query(sql, (rs, rowNum) -> createMpa(rs), id)
+            String getMpaByID = "SELECT * FROM MPA_RATING WHERE id = ?";
+            return jdbcTemplate.query(getMpaByID, (rs, rowNum) -> createMpa(rs), id)
                     .stream()
                     .findFirst();
         } else {

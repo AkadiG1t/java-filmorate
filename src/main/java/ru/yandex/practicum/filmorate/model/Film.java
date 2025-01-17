@@ -19,6 +19,7 @@ import java.util.LinkedHashSet;
 @Data
 @Builder
 public class Film {
+
     @NotNull(groups = Update.class)
     long id;
     @NotBlank(groups = Create.class)

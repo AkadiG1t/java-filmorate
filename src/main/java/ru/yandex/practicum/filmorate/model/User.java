@@ -17,6 +17,7 @@ import java.time.LocalDate;
 @Data
 @Builder
 public class User {
+
     @NotNull(groups = Update.class)
     Long id;
     @Email(message = "must be a well-formed email address")

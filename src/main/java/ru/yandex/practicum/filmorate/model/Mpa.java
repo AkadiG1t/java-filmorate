@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 @Data
 @AllArgsConstructor
 public class Mpa {
+
     Long id;
     String name;
 }

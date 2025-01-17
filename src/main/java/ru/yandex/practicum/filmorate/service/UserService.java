@@ -62,7 +62,7 @@ public class UserService {
         friendRepository.addFriend(userId, friendId);
     }
 
-    public User get (long userId){
+    public User get(long userId) {
        return userRepository.get(userId).orElseThrow(() -> new NotFoundException("Пользователь с id " +
                userId + "не найден"));
     }

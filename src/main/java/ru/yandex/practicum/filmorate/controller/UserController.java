@@ -21,24 +21,21 @@ public class UserController {
 
     @GetMapping("/{id}")
     public User get(@PathVariable long id) {
-        User user = userService.get(id);
 
-        return user;
+        return userService.get(id);
     }
 
     @GetMapping
     public Collection<User> users() {
-        Collection<User> userList = userService.getAll();
 
-        return userList;
+        return userService.getAll();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public User create(@RequestBody @Valid @Validated(Create.class) User user) {
-        User createdUser = userService.create(user);
 
-        return createdUser;
+        return userService.create(user);
     }
 
     @PutMapping
@@ -62,15 +59,13 @@ public class UserController {
 
     @GetMapping("/{id}/friends")
     public Collection<User> getAllFriends(@PathVariable long id) {
-        Collection<User> friendsList = userService.getFriends(id);
 
-        return friendsList;
+        return userService.getFriends(id);
     }
 
     @GetMapping("/{id}/friends/common/{otherId}")
     public Collection<User> getCommonFriends(@PathVariable long id, @PathVariable long otherId) {
-        Collection<User> commonFriends = userService.getCommonFriends(id, otherId);
 
-        return commonFriends;
+        return userService.getCommonFriends(id, otherId);
     }
 }

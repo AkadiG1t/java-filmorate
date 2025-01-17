@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.dao;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -28,7 +27,7 @@ public class FilmDBStorage implements FilmRepository {
                 "FROM FILMS f " +
                 "LEFT JOIN FILM_GENRES fg ON f.id = fg.film_id " +
                 "LEFT JOIN GENRES g ON fg.genre_id = g.id " +
-                "WHERE f.id = ?";;
+                "WHERE f.id = ?";
 
         List<Film> films = jdbcTemplate.query(sql, (rs, rowNum) -> {
             Film film = createFilm(rs);

@@ -3,9 +3,7 @@ package ru.yandex.practicum.filmorate.model;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import ru.yandex.practicum.filmorate.annotations.BirthdayAnnotation;
 import ru.yandex.practicum.filmorate.marker.Create;
@@ -17,7 +15,6 @@ import java.time.LocalDate;
 @Data
 @Builder
 public class User {
-
     @NotNull(groups = Update.class)
     Long id;
     @Email(message = "must be a well-formed email address")

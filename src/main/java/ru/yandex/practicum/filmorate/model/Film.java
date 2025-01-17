@@ -3,9 +3,7 @@ package ru.yandex.practicum.filmorate.model;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import ru.yandex.practicum.filmorate.annotations.ReleaseDateAnnotation;
 import ru.yandex.practicum.filmorate.marker.Create;
@@ -19,7 +17,6 @@ import java.util.LinkedHashSet;
 @Data
 @Builder
 public class Film {
-
     @NotNull(groups = Update.class)
     long id;
     @NotBlank(groups = Create.class)

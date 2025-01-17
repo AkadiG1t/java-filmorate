@@ -1,24 +1,21 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.marker.Create;
 import ru.yandex.practicum.filmorate.model.Film;
-
 import ru.yandex.practicum.filmorate.service.FilmService;
-
 import java.util.Collection;
 
 
 @RestController
 @RequestMapping("/films")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class FilmController {
-   private final FilmService filmService = new FilmService();
+   private final FilmService filmService;
 
    @GetMapping("/{id}")
    public Film get(@PathVariable long id) {
@@ -26,22 +23,20 @@ public class FilmController {
    }
 
    @GetMapping
-   public Collection<Film> allFilms() {
+   public Collection<Film> getAllFilms() {
        return filmService.getAll();
    }
 
    @PostMapping
    public Film create(@RequestBody @Valid @Validated(Create.class) Film film) {
-       Film createdFilm = filmService.create(film);
 
-       return film;
+       return filmService.create(film);
    }
 
    @PutMapping
    public Film update(@RequestBody @Valid @Validated(Create.class) Film film) {
-       Film updatedFilm = filmService.update(film);
 
-       return updatedFilm;
+       return filmService.update(film);
    }
 
    @PutMapping("{id}/like/{userId}")
@@ -60,7 +55,7 @@ public class FilmController {
 
    @GetMapping("/popular")
    @Validated
-   public Collection<Film> getMostPopularFilms(@RequestParam(name = "count", required = false) Long count) {
+   public Collection<Film> getMostPopularFilms(@RequestParam(name = "count", required = false) int count) {
        return filmService.mostPopularFilms(count);
    }
 

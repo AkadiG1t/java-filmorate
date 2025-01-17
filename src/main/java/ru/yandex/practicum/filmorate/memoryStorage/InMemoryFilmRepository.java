@@ -1,10 +1,10 @@
-package ru.yandex.practicum.filmorate.repository;
+package ru.yandex.practicum.filmorate.memoryStorage;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
-
+import ru.yandex.practicum.filmorate.repository.FilmRepository;
 import java.util.*;
 
 @Slf4j
@@ -27,7 +27,6 @@ public class InMemoryFilmRepository implements FilmRepository {
 
     @Override
     public Film save(Film film) {
-
         film.setId(++filmId);
         films.put(film.getId(), film);
 
@@ -49,5 +48,10 @@ public class InMemoryFilmRepository implements FilmRepository {
         Optional.ofNullable(film.getDescription()).ifPresent(oldFilm::setDescription);
 
         return oldFilm;
+    }
+
+    @Override
+    public List<Film> getMostPopular(int count) {
+        return List.of();
     }
 }

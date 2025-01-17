@@ -1,7 +1,7 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -10,15 +10,14 @@ import ru.yandex.practicum.filmorate.marker.Create;
 import ru.yandex.practicum.filmorate.marker.Update;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
-
 import java.util.Collection;
 
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/users")
+@AllArgsConstructor
 public class UserController {
-    private final UserService userService = new UserService();
+    private final UserService userService;
 
     @GetMapping("/{id}")
     public User get(@PathVariable long id) {
@@ -43,10 +42,9 @@ public class UserController {
     }
 
     @PutMapping
-    public User update(@RequestBody @Valid @Validated(Update.class) User user) {
-        User updatedUser = userService.update(user);
+    public User update(@RequestBody @Validated(Update.class) User user) {
 
-        return updatedUser;
+        return userService.update(user);
     }
 
     @PutMapping("/{id}/friends/{friendId}")
@@ -71,7 +69,7 @@ public class UserController {
 
     @GetMapping("/{id}/friends/common/{otherId}")
     public Collection<User> getCommonFriends(@PathVariable long id, @PathVariable long otherId) {
-        Collection<User> commonFriends = userService.getCommonFriedns(id, otherId);
+        Collection<User> commonFriends = userService.getCommonFriends(id, otherId);
 
         return commonFriends;
     }

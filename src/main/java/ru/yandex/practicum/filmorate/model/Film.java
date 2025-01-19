@@ -10,8 +10,7 @@ import ru.yandex.practicum.filmorate.annotations.ReleaseDateAnnotation;
 import ru.yandex.practicum.filmorate.marker.Create;
 import ru.yandex.practicum.filmorate.marker.Update;
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
-
+import java.util.*;
 
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -29,6 +28,6 @@ public class Film {
     LocalDate releaseDate;
     @Min(value = 0)
     Integer duration;
-    final LinkedHashSet<Genre> genres = new LinkedHashSet<>();
+    final Set<Genre> genres = new TreeSet<>(Comparator.comparing(Genre::getId));
     Mpa mpa;
 }

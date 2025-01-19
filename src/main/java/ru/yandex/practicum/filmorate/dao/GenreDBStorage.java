@@ -23,7 +23,7 @@ public class GenreDBStorage implements GenreRepository {
 
     @Override
     public List<Genre> getAllGenre() {
-        return jdbcTemplate.query("SELECT * FROM GENRE", (rs, rowNum) -> createGenre(rs));
+        return jdbcTemplate.query("SELECT * FROM GENRES", (rs, rowNum) -> createGenre(rs));
     }
 
     @Override

@@ -108,4 +108,5 @@ public class FilmService {
     public Optional<Genre> getGenreById(long id) {
         return Optional.ofNullable(genreRepository.getGenreById(id).orElseThrow(() -> new NotFoundException(id)));
     }
+
 }

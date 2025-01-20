@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
+import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidateException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Genre;
@@ -33,25 +35,25 @@ public class FilmDBStorage implements FilmRepository {
             return film;
         }, id);
 
-        if (!films.isEmpty()) {
-            Film film = films.getFirst();
+        if (CollectionUtils.isEmpty(films)) {
+            throw new NotFoundException("Фильм с id " + id + " не найден");
 
+        } else {
+            Film film = films.getFirst();
 
             jdbcTemplate.query(sql, (rs) -> {
                 long genreId = rs.getLong("genre_id");
                 String genreName = rs.getString("genre_name");
 
-                if (genreId > 0) {
+                 if (genreId > 0) {
                     Genre genre = new Genre(genreId, genreName);
-                    film.getGenres().add(genre); // Добавляем жанр в коллекцию
+                    film.getGenres().add(genre);
                 }
             }, id);
-
 
             return Optional.of(film);
         }
 
-        return Optional.empty();
     }
 
 
